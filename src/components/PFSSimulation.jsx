@@ -161,11 +161,20 @@ const PFSDemo = () => {
               <p className="text-blue-400 text-sm uppercase tracking-widest font-bold">
                 Double Ratchet Algorithm • Démonstration Interactive
               </p>
+              <div className="bg-purple-900/30 border border-purple-500/50 rounded-xl p-3 mb-4">
+  <p className="text-purple-300 text-sm text-center">
+    📖 <strong>Chapitre 5, Section II</strong> : Perfect Forward Secrecy (pages 56-58)
+  </p>
+</div>
             </div>
+            
           </div>
+
+          
           <p className="text-slate-300 max-w-3xl mx-auto">
             Comparez l'impact d'une compromission de clé avec et sans Perfect Forward Secrecy
           </p>
+          
         </div>
 
         {/* MODE TOGGLE */}
@@ -799,7 +808,13 @@ const PFSDemo = () => {
             </a>
           </div>
         </div>
+        <footer className="mt-8 bg-slate-900/50 border-t border-slate-700 rounded-xl p-4">
+  <p className="text-center text-slate-400 text-sm">
+    📄 <strong>Référence Rapport</strong> : Chapitre 5, Section II - "Simulation de Perfect Forward Secrecy"
+  </p>
+</footer>
       </div>
+      
     </div>
   );
 };

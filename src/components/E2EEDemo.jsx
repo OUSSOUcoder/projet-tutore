@@ -432,6 +432,7 @@ const E2EEDemo = ({ setActiveTab }) => {
   const getReceiverUser = () => users.find(u => u.id === selectedReceiver);
 
   return (
+    
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-8 relative overflow-hidden">
       {/* Particules d'arrière-plan */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -537,6 +538,14 @@ const E2EEDemo = ({ setActiveTab }) => {
           <h1 className="text-5xl font-black text-white uppercase tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
             Démonstration E2EE Avancée
           </h1>
+
+<div className="bg-blue-900/30 border border-blue-500/50 rounded-xl p-3 mb-4 max-w-4xl mx-auto">
+  <p className="text-blue-300 text-sm text-center">
+    📖 <strong>Chapitre 5, Section I</strong> : Démonstration E2EE et Attaques Réseau (pages 51-56)
+  </p>
+</div>
+
+
           <p className="text-blue-400 text-lg">
             Visualisation du Trajet des Paquets & Attaques Cryptographiques
           </p>
@@ -548,6 +557,8 @@ const E2EEDemo = ({ setActiveTab }) => {
               </span>
               <CheckCircle2 className="w-4 h-4 text-green-400" />
             </div>
+
+            
           )}
           {!keysReady && (
             <div className="inline-flex items-center gap-2 bg-yellow-900/20 border border-yellow-500/30 px-4 py-2 rounded-lg animate-pulse backdrop-blur-sm">
@@ -1294,7 +1305,13 @@ const E2EEDemo = ({ setActiveTab }) => {
             </div>
           </>
         )}
+        <footer className="mt-8 bg-slate-900/50 border-t border-slate-700 rounded-xl p-4">
+  <p className="text-center text-slate-400 text-sm">
+    📄 <strong>Référence Rapport</strong> : Chapitre 5, Section I - "Démonstration du chiffrement E2EE et différent types d'attaques"
+  </p>
+</footer>
       </div>
+      
     </div>
   );
 };

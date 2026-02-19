@@ -244,12 +244,36 @@ const NetworkSecurityVisualization = () => {
             <h1 className="text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
               🕸️ Topologie Réseau E2EE
             </h1>
+            <div className="bg-cyan-900/30 border border-cyan-500/50 rounded-xl p-3 mb-4">
+  <p className="text-cyan-300 text-sm text-center">
+    📖 <strong>Chapitre 5, Section IV</strong> : Topologie Réseau en Étoile (pages 59-63)
+  </p>
+</div>
             <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full animate-gradient" />
           </div>
           
           <p className="text-xl text-slate-300 mb-4">
             Visualisation étape par étape d'un message chiffré
           </p>
+
+
+<div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-4 mb-4">
+  <h3 className="font-bold text-blue-400 mb-2">🏗️ Architecture utilisée par :</h3>
+  <ul className="text-sm text-gray-300 space-y-1">
+    <li>✅ <strong>Signal</strong> : Architecture client-serveur centralisée</li>
+    <li>✅ <strong>WhatsApp</strong> : Architecture client-serveur centralisée</li>
+    <li>⚠️ <strong>Telegram</strong> : Architecture client-serveur + serveurs distribués</li>
+  </ul>
+</div>
+
+
+<div className="bg-orange-900/30 border border-orange-500/50 rounded-lg p-4 mb-4">
+  <h3 className="font-bold text-orange-400 mb-2">🇧🇫 Contexte Burkina Faso :</h3>
+  <p className="text-sm text-gray-300">
+    Les opérateurs télécoms burkinabè (<strong>Orange BF, Moov Africa, Telecel Faso</strong>) 
+    utilisent cette même topologie en étoile pour router les SMS et données.
+  </p>
+</div>
 
           {/* Bouton d'aide */}
           <button
@@ -716,6 +740,11 @@ const NetworkSecurityVisualization = () => {
             </p>
           </div>
         </div>
+        <footer className="mt-8 bg-slate-900/50 border-t border-slate-700 rounded-xl p-4">
+  <p className="text-center text-slate-400 text-sm">
+    📄 <strong>Référence Rapport</strong> : Chapitre 5, Section IV - "Simulation du réseau en topologie étoile"
+  </p>
+</footer>
       </div>
 
       {/* Styles CSS personnalisés */}
@@ -767,7 +796,9 @@ const NetworkSecurityVisualization = () => {
           animation-delay: 2s;
         }
       `}</style>
+      
     </div>
+    
   );
 };
 

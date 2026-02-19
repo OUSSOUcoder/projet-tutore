@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Terminal, Shield, Key, CheckCircle, XCircle, Zap, Play, RefreshCw } from 'lucide-react';
+import { Terminal, Shield, Key, CheckCircle, XCircle, Zap, Play, RefreshCw, Globe } from 'lucide-react';
 
 const BruteForceDemo = () => {
   const [isSimulating, setIsSimulating] = useState(false);
@@ -9,9 +9,8 @@ const BruteForceDemo = () => {
   const [bruteForceAttempts, setBruteForceAttempts] = useState(0);
   const [bruteForceResults, setBruteForceResults] = useState([]);
   const [bruteForcePhase, setBruteForcePhase] = useState("");
-  const [attemptedKeys, setAttemptedKeys] = useState([]); // Clés tentées visuellement
+  const [attemptedKeys, setAttemptedKeys] = useState([]);
 
-  // Générer une clé aléatoire pour l'affichage visuel
   const generateRandomKeyDisplay = (bits) => {
     const bytes = bits / 8;
     const randomBytes = [];
@@ -21,7 +20,6 @@ const BruteForceDemo = () => {
     return randomBytes.join('');
   };
 
-  // Brute Force Simulation (10s per key size)
   useEffect(() => {
     if (isSimulating) {
       const keySizes = [64, 128, 192, 256];
@@ -31,11 +29,10 @@ const BruteForceDemo = () => {
         setCurrentKeySize(keySize);
         setBruteForceProgress(0);
         setBruteForceAttempts(0);
-        setAttemptedKeys([]); // Reset clés tentées
+        setAttemptedKeys([]);
         setBruteForcePhase(`Test clé ${keySize}-bit en cours...`);
         setSimulationStep(index);
 
-        // Nombre de clés affichées par mise à jour
         const keysPerStep = keySize === 64 ? 5 : keySize === 128 ? 4 : keySize === 192 ? 3 : 2;
 
         const progressInterval = setInterval(() => {
@@ -49,7 +46,6 @@ const BruteForceDemo = () => {
           
           setBruteForceAttempts(prev => prev + Math.floor(Math.random() * 10000 * (keySize / 64)));
           
-          // Ajouter des clés tentées visuellement toutes les 500ms
           const newKeys = [];
           for (let k = 0; k < keysPerStep; k++) {
             newKeys.push({
@@ -58,10 +54,9 @@ const BruteForceDemo = () => {
               bits: keySize
             });
           }
-          setAttemptedKeys(prev => [...newKeys, ...prev].slice(0, 12)); // Garder les 12 dernières
+          setAttemptedKeys(prev => [...newKeys, ...prev].slice(0, 12));
         }, 500);
 
-        // After 10 seconds, show result
         setTimeout(() => {
           clearInterval(progressInterval);
           
@@ -77,7 +72,6 @@ const BruteForceDemo = () => {
           
           setBruteForceResults(prev => [...prev, result]);
           
-          // Move to next key size
           currentIndex++;
           if (currentIndex < keySizes.length) {
             setTimeout(() => testKey(keySizes[currentIndex], currentIndex), 1000);
@@ -98,7 +92,6 @@ const BruteForceDemo = () => {
     setBruteForceProgress(0);
     setBruteForceResults([]);
     setBruteForceAttempts(0);
-    setAttemptedKeys([]);
   };
 
   const resetSimulation = () => {
@@ -107,44 +100,41 @@ const BruteForceDemo = () => {
     setBruteForceProgress(0);
     setBruteForceResults([]);
     setBruteForceAttempts(0);
-    setBruteForcePhase("");
     setAttemptedKeys([]);
   };
 
   const steps = [
-    { title: 'Test 64-bit', desc: '10s: Clé faible' },
-    { title: 'Test 128-bit', desc: '10s: Clé moyenne' },
-    { title: 'Test 192-bit', desc: '10s: Clé forte' },
-    { title: 'Test 256-bit', desc: 'Incassable' }
+    { title: '64-bit', desc: 'Faible' },
+    { title: '128-bit', desc: 'Moyen' },
+    { title: '192-bit', desc: 'Fort' },
+    { title: '256-bit', desc: 'Maximum' }
   ];
 
   return (
-    <div className="min-h-screen p-6 bg-[#0a0a0f] relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-yellow-900 to-orange-900 p-4 md:p-8 text-white relative overflow-hidden">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;600;800&display=swap');
-        
-        * { font-family: 'JetBrains Mono', monospace; }
-        h1, h2, h3, h4, h5, h6 { font-family: 'Orbitron', sans-serif; letter-spacing: 0.05em; }
+        @keyframes float-diagonal {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          25% { transform: translate(10px, -10px) rotate(1deg); }
+          50% { transform: translate(0, -20px) rotate(0deg); }
+          75% { transform: translate(-10px, -10px) rotate(-1deg); }
+        }
+
+        @keyframes noise {
+          0%, 100% { opacity: 0.03; }
+          50% { opacity: 0.06; }
+        }
 
         .gradient-mesh {
           background: 
-            radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 0.15) 0px, transparent 50%),
-            radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 0.1) 0px, transparent 50%),
-            radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 0.12) 0px, transparent 50%),
-            radial-gradient(at 10% 29%, hsla(256, 96%, 67%, 0.1) 0px, transparent 50%);
-          filter: blur(100px) saturate(150%);
+            radial-gradient(circle at 20% 50%, rgba(234, 179, 8, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.1) 0%, transparent 50%);
         }
 
         .noise-bg {
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-          opacity: 0.05;
-        }
-
-        @keyframes float-diagonal {
-          0%, 100% { transform: translate(0, 0) rotate(0deg); }
-          25% { transform: translate(20px, -20px) rotate(3deg); }
-          50% { transform: translate(0, -40px) rotate(0deg); }
-          75% { transform: translate(-20px, -20px) rotate(-3deg); }
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='3.5' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E");
+          animation: noise 1s infinite;
+          mix-blend-mode: overlay;
         }
 
         .float-diagonal { animation: float-diagonal 8s ease-in-out infinite; }
@@ -205,6 +195,23 @@ const BruteForceDemo = () => {
           </div>
         </div>
 
+        {/* 🆕 Contexte Académique */}
+        <div className="bg-orange-900/30 border-2 border-orange-500/50 rounded-xl p-4 backdrop-blur-sm">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl">🇧🇫</span>
+            <div className="flex-1">
+              <h2 className="text-orange-400 font-bold text-sm mb-1">
+                Contexte Académique - Licence 3 Informatique
+              </h2>
+              <p className="text-sm text-gray-300">
+                Démonstration des attaques par force brute sur différentes tailles de clés. 
+                Cette simulation illustre pourquoi AES-256 est le standard recommandé 
+                par le <strong>RGPD</strong> et l'<strong>Acte CEDEAO A/SA.1/01/10</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Control */}
         <div className="flex justify-center gap-4">
           {!isSimulating && (
@@ -248,109 +255,108 @@ const BruteForceDemo = () => {
                     key={idx}
                     className={`p-6 rounded-xl border-2 ${
                       result.success 
-                        ? 'bg-red-950/30 border-red-500/50' 
-                        : 'bg-green-950/30 border-green-500/50'
+                        ? 'bg-red-950/40 border-red-500' 
+                        : 'bg-green-950/40 border-green-500'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className={`font-black text-sm flex items-center gap-2 ${
-                        result.success ? 'text-red-400' : 'text-green-400'
-                      }`}>
-                        <Key className="w-4 h-4" />
-                        CLÉ {result.keySize}-BIT
-                      </h4>
-                      <span className="text-xs font-mono text-slate-400">Temps: {result.time}</span>
-                    </div>
-                    
-                    <div className={`p-4 rounded-lg border-2 flex items-center gap-3 ${
-                      result.success 
-                        ? 'bg-red-500/20 border-red-500' 
-                        : 'bg-green-500/20 border-green-500'
-                    }`}>
-                      {result.success ? (
-                        <XCircle className="w-6 h-6 text-red-400" />
-                      ) : (
-                        <CheckCircle className="w-6 h-6 text-green-400" />
-                      )}
-                      <span className={`font-bold ${
-                        result.success ? 'text-red-300' : 'text-green-300'
-                      }`}>
-                        {result.message}
-                      </span>
-                    </div>
-
-                    {!result.success && (
-                      <div className="mt-4 bg-black/40 p-4 rounded-lg">
-                        <p className="text-xs text-slate-400">
-                          <strong className="text-green-400">Combinaisons possibles:</strong> 2²⁵⁶ ≈ 10⁷⁷
-                          <br />
-                          <strong className="text-green-400">Temps requis:</strong> Plus vieux que l'univers!
-                        </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        {result.success ? (
+                          <XCircle className="w-8 h-8 text-red-400" />
+                        ) : (
+                          <CheckCircle className="w-8 h-8 text-green-400" />
+                        )}
+                        <div>
+                          <h3 className={`font-black text-lg ${result.success ? 'text-red-400' : 'text-green-400'}`}>
+                            {result.message}
+                          </h3>
+                          <p className="text-slate-400 text-sm">Temps nécessaire: {result.time}</p>
+                        </div>
                       </div>
-                    )}
+                      <Key className={`w-12 h-12 ${result.success ? 'text-red-500' : 'text-green-500'} opacity-20`} />
+                    </div>
                   </div>
                 ))}
-
-                {/* Current Test in Progress */}
-                {currentKeySize > 0 && simulationStep < 4 && (
-                  <div className="bg-yellow-950/30 p-6 rounded-xl border border-yellow-500/30 animate-pulse">
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-yellow-400 font-black text-sm flex items-center gap-2">
-                        <Zap className="w-4 h-4 animate-spin" />
-                        TEST EN COURS: CLÉ {currentKeySize}-BIT
-                      </h4>
-                      <span className="text-xs text-yellow-300 font-mono">
-                        {bruteForceProgress.toFixed(2)}%
-                      </span>
-                    </div>
-                    
-                    <div className="w-full bg-slate-800 h-4 rounded-full overflow-hidden mb-4">
-                      <div 
-                        className="h-full bg-gradient-to-r from-yellow-500 to-yellow-600 transition-all duration-300"
-                        style={{ width: `${Math.min(bruteForceProgress, 100)}%` }}
-                      />
-                    </div>
-                    
-                    <p className="text-xs text-slate-400 font-mono">
-                      Tentatives: {bruteForceAttempts.toLocaleString()}
-                    </p>
-                  </div>
-                )}
               </div>
 
-              {/* Final Comparison */}
-              {simulationStep >= 4 && (
-                <div className="mt-6 bg-slate-950/50 p-6 rounded-xl border border-slate-700">
-                  <h4 className="text-white font-black text-sm mb-4">COMPARAISON FINALE</h4>
-                  <div className="grid grid-cols-4 gap-4">
-                    {[64, 128, 192, 256].map((size) => {
-                      const result = bruteForceResults.find(r => r.keySize === size);
-                      return (
-                        <div key={size} className="text-center">
-                          <div className={`w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center border-2 ${
-                            result?.success 
-                              ? 'bg-red-500/20 border-red-500' 
-                              : 'bg-green-500/20 border-green-500'
-                          }`}>
-                            {result?.success ? (
-                              <XCircle className="w-8 h-8 text-red-400" />
-                            ) : (
-                              <CheckCircle className="w-8 h-8 text-green-400" />
-                            )}
-                          </div>
-                          <p className={`text-xs font-bold ${
-                            result?.success ? 'text-red-400' : 'text-green-400'
-                          }`}>
-                            {size}-bit
-                          </p>
-                          <p className="text-[10px] text-slate-500">{result?.time}</p>
-                        </div>
-                      );
-                    })}
+              {/* Key Attempts Visualization */}
+              {currentKeySize > 0 && attemptedKeys.length > 0 && (
+                <div className="mt-6 bg-slate-950/50 p-4 rounded-xl border border-slate-700">
+                  <h4 className="text-white font-black text-xs mb-3 flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-yellow-400" />
+                    CLÉS TENTÉES (SIMULATION VISUELLE)
+                  </h4>
+                  <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
+                    {attemptedKeys.map((attempt) => (
+                      <div 
+                        key={attempt.id} 
+                        className="key-attempt bg-slate-900/50 px-3 py-2 rounded-lg border border-slate-700 font-mono text-xs text-yellow-300"
+                      >
+                        {attempt.key}
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
+
+              {/* Progress Bar */}
+              {currentKeySize > 0 && simulationStep < 4 && (
+                <div className="mt-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="text-yellow-400 font-black text-xs uppercase tracking-[0.2em]">
+                      TEST EN COURS: CLÉ {currentKeySize}-BIT
+                    </h4>
+                    <span className="text-xs text-yellow-300 font-mono">
+                      {bruteForceProgress.toFixed(2)}%
+                    </span>
+                  </div>
+                  
+                  <div className="w-full bg-slate-800 h-4 rounded-full overflow-hidden mb-4">
+                    <div 
+                      className="h-full bg-gradient-to-r from-yellow-500 to-yellow-600 transition-all duration-300"
+                      style={{ width: `${Math.min(bruteForceProgress, 100)}%` }}
+                    />
+                  </div>
+                  
+                  <p className="text-xs text-slate-400 font-mono">
+                    Tentatives: {bruteForceAttempts.toLocaleString()}
+                  </p>
+                </div>
+              )}
             </div>
+
+            {/* Final Comparison */}
+            {simulationStep >= 4 && (
+              <div className="mt-6 bg-slate-950/50 p-6 rounded-xl border border-slate-700">
+                <h4 className="text-white font-black text-sm mb-4">COMPARAISON FINALE</h4>
+                <div className="grid grid-cols-4 gap-4">
+                  {[64, 128, 192, 256].map((size) => {
+                    const result = bruteForceResults.find(r => r.keySize === size);
+                    return (
+                      <div key={size} className="text-center">
+                        <div className={`w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center border-2 ${
+                          result?.success 
+                            ? 'bg-red-500/20 border-red-500' 
+                            : 'bg-green-500/20 border-green-500'
+                        }`}>
+                          {result?.success ? (
+                            <XCircle className="w-8 h-8 text-red-400" />
+                          ) : (
+                            <CheckCircle className="w-8 h-8 text-green-400" />
+                          )}
+                        </div>
+                        <p className={`text-xs font-bold ${
+                          result?.success ? 'text-red-400' : 'text-green-400'
+                        }`}>
+                          {size}-bit
+                        </p>
+                        <p className="text-[10px] text-slate-500">{result?.time}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Steps */}
             <div className="grid grid-cols-4 gap-3">
@@ -382,7 +388,8 @@ const BruteForceDemo = () => {
                   Danger
                 </h4>
                 <p className="text-red-200 text-sm leading-relaxed">
-                  Les clés faibles peuvent être cassées, mais AES-256 reste incassable.
+                  Les clés 64-bit et 128-bit peuvent être cassées avec des ressources suffisantes. 
+                  Seules les clés 256-bit offrent une protection à long terme.
                 </p>
               </div>
 
@@ -392,12 +399,34 @@ const BruteForceDemo = () => {
                   Solution
                 </h4>
                 <p className="text-green-200 text-sm leading-relaxed">
-                  Utilisation obligatoire de clés AES-256 (2²⁵⁶ combinaisons).
+                  AES-256 (2²⁵⁶ combinaisons) est le standard recommandé. 
+                  Signal, WhatsApp et Telegram (Secret Chats) utilisent AES-256.
                 </p>
               </div>
             </div>
           </div>
         )}
+
+        {/* 🆕 Footer avec références */}
+        <footer className="mt-12 bg-slate-900/50 border-t-2 border-slate-700 rounded-xl p-6 backdrop-blur-sm">
+          <div className="grid grid-cols-3 gap-6 text-sm">
+            <div>
+              <h4 className="text-slate-400 font-bold mb-2 flex items-center gap-2">
+                <Globe className="w-4 h-4" />
+                Chapitre 2 - Rapport
+              </h4>
+              <p className="text-slate-300">Protocoles cryptographiques : AES, RSA, ECDH</p>
+            </div>
+            <div>
+              <h4 className="text-slate-400 font-bold mb-2">🔒 Standards</h4>
+              <p className="text-slate-300">NIST recommande AES-256 pour top-secret</p>
+            </div>
+            <div>
+              <h4 className="text-slate-400 font-bold mb-2">⚖️ Réglementation</h4>
+              <p className="text-slate-300">RGPD Art. 32 : Chiffrement approprié obligatoire</p>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );

@@ -1,0 +1,66 @@
+{
+  "name": "secure-messaging-demo",
+  "version": "2.0.0",
+  "description": "Production-grade secure messaging simulator with libsodium, Sealed Sender v2, and persistent Double Ratchet",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "lint": "eslint src --ext js,jsx"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "libsodium-wrappers": "^0.7.13"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.42.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
+    "vite": "^4.3.9",
+    "vitest": "^0.32.0"
+  },
+  "keywords": [
+    "cryptography",
+    "e2ee",
+    "end-to-end-encryption",
+    "signal-protocol",
+    "double-ratchet",
+    "sealed-sender",
+    "libsodium",
+    "curve25519",
+    "xchacha20-poly1305",
+    "educational",
+    "demo"
+  ],
+  "author": "Educational Project",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/secure-messaging-demo"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
